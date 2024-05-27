@@ -6,7 +6,13 @@ import {
   signOut,
 } from "firebase/auth";
 
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyB2eNoXl4ovUBAeC5B3cgQQ8wm2LtL8H60",
   authDomain: "todo-9d0b1.firebaseapp.com",
@@ -51,6 +57,12 @@ export const getTodoListFromDatabase = async (user) => {
     console.log("No such document.");
     return null;
   }
+};
+export const editTodoList = async (user, todos) => {
+  const docRef = doc(db, "todos", user.uid);
+  await updateDoc(docRef, {
+    todos,
+  });
 };
 
 export const createUserDocFromAuth = async (userAuth) => {

@@ -7,6 +7,7 @@ import {
   createUserDocFromAuth,
   getTodoListFromDatabase,
   addTodoToDatabase,
+  editTodoList,
 } from "./firebase-utils.js";
 
 import { v4 as uuid } from "uuid";
@@ -18,22 +19,33 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const addTodoItem = (evt) => {
     const newTodos = [...todos, { text: input, id: uuid() }];
-    setTodos([...todos, { text: input, id: uuid() }]);
+    setTodos([...todos, { text: input, id: uuid(), completed: false }]);
     setInput("");
     addTodoToDatabase(user, newTodos);
   };
 
-  const toggleTodoComplete = (e) => {
+  const toggleTodoComplete = (e, id) => {
     if (e.target.className.includes("completed")) {
       e.target.className = e.target.className.replace("completed", "");
     } else {
       e.target.className += " completed";
     }
+    const newTodos = [];
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].id === id) {
+        newTodos.push({ ...todos[i], complete: !todos[i].complete });
+      } else {
+        newTodos.push(todos[i]);
+      }
+    }
+    setTodos(newTodos);
+    editTodoList(user, newTodos);
   };
 
   const deleteTodo = (id) => {
     const newTodos = todos.filter((t) => t.id !== id);
     setTodos(newTodos);
+    editTodoList(user, newTodos);
   };
   const editTodo = (id, newText) => {
     const newTodos = [];
@@ -45,6 +57,7 @@ function App() {
       }
     }
     setTodos(newTodos);
+    editTodoList(user, newTodos);
   };
 
   const logGoogleUser = async () => {
@@ -61,6 +74,9 @@ function App() {
   const logOut = async () => {
     const response = await signOut;
     setIsSignedIn(false);
+    setTodos([]);
+    setUser("");
+    setInput("");
   };
 
   return (
@@ -71,15 +87,29 @@ function App() {
       </div>
 
       {isSignedIn ? (
-        <button className="sign-button" onClick={logOut}>
-          Sign Out
-        </button>
+        <>
+          <button className="sign-button" onClick={logOut}>
+            Sign Out
+          </button>
+          <div>
+            <input
+              type="text"
+              className="input"
+              placeholder="Type in a todo item."
+              value={input}
+              onChange={(evt) => setInput(evt.target.value)}
+            ></input>
+            <button onClick={addTodoItem} className="add-button">
+              Add
+            </button>
+          </div>
+        </>
       ) : (
         <button className="sign-button" onClick={logGoogleUser}>
           Sign In
         </button>
       )}
-      <div>
+      {/* <div>
         <input
           type="text"
           className="input"
@@ -90,13 +120,15 @@ function App() {
         <button onClick={addTodoItem} className="add-button">
           Add
         </button>
-      </div>
+      </div> */}
       <div className="todos">
         {todos.map((t) => (
           <TodoItem
             key={t.id}
             todo={t}
-            onTodoClick={toggleTodoComplete}
+            onTodoClick={(e) => {
+              toggleTodoComplete(e, t.id);
+            }}
             onDeleteClick={deleteTodo}
             onEditTodo={editTodo}
           >
