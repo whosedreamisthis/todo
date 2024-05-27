@@ -18,8 +18,11 @@ function App() {
   const [user, setUser] = useState("");
   const [isSignedIn, setIsSignedIn] = useState(false);
   const addTodoItem = (evt) => {
+    if (input === "") {
+      return;
+    }
     const newTodos = [...todos, { text: input, id: uuid() }];
-    setTodos([...todos, { text: input, id: uuid(), completed: false }]);
+    setTodos([{ text: input, id: uuid(), completed: false }, ...todos]);
     setInput("");
     addTodoToDatabase(user, newTodos);
   };
@@ -33,9 +36,12 @@ function App() {
     const newTodos = [];
     for (let i = 0; i < todos.length; i++) {
       if (todos[i].id === id) {
+        //newTodos.unshift({ ...todos[i], complete: !todos[i].complete });
         newTodos.push({ ...todos[i], complete: !todos[i].complete });
       } else {
         newTodos.push(todos[i]);
+
+        // newTodos.push(todos[i]);
       }
     }
     setTodos(newTodos);
@@ -48,11 +54,16 @@ function App() {
     editTodoList(user, newTodos);
   };
   const editTodo = (id, newText) => {
+    if (newText === "") {
+      return;
+    }
     const newTodos = [];
     for (let i = 0; i < todos.length; i++) {
       if (todos[i].id === id) {
-        newTodos.push({ id, text: newText });
+        newTodos.unshift({ id, text: newText });
+        // newTodos.push({ id, text: newText });
       } else {
+        // newTodos.push(todos[i]);
         newTodos.push(todos[i]);
       }
     }
@@ -66,7 +77,6 @@ function App() {
     setUser(user);
     const todos = await getTodoListFromDatabase(user);
     setIsSignedIn(true);
-    console.log("todos", todos);
     todos.map((t) => t);
     setTodos(todos);
   };
@@ -121,20 +131,22 @@ function App() {
           Add
         </button>
       </div> */}
-      <div className="todos">
-        {todos.map((t) => (
-          <TodoItem
-            key={t.id}
-            todo={t}
-            onTodoClick={(e) => {
-              toggleTodoComplete(e, t.id);
-            }}
-            onDeleteClick={deleteTodo}
-            onEditTodo={editTodo}
-          >
-            {t.todo}
-          </TodoItem>
-        ))}
+      <div className="todos-container">
+        <div className="todos">
+          {todos.map((t) => (
+            <TodoItem
+              key={t.id}
+              todo={t}
+              onTodoClick={(e) => {
+                toggleTodoComplete(e, t.id);
+              }}
+              onDeleteClick={deleteTodo}
+              onEditTodo={editTodo}
+            >
+              {t.todo}
+            </TodoItem>
+          ))}
+        </div>
       </div>
     </div>
   );

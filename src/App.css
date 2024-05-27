@@ -7,6 +7,7 @@
   background-color: rgb(255, 200, 97);
   margin-top: 30px;
   position: relative;
+  max-height: 600px;
 }
 .title-container {
   /* background-color: red; */
@@ -27,16 +28,26 @@
   color: black;
 }
 .input {
-  /* background-color: green; */
   padding: 10px;
   margin: 20px;
   font-size: 20px;
+  width: 64%;
 }
 
-.todos {
-  /* margin: 20px; */
+.todos-container {
+  overflow: scroll;
+  overflow-x: hidden;
+  z-index: 100;
+  /* overflow: hidden; */
 }
 
+.todos-container::-webkit-scrollbar {
+  background: rgb(255, 200, 97);
+  /* display: none; */
+  /* width: 100%;  */
+  /* width: 20px; */
+  /* position: absolute; */
+}
 .todo-item {
   height: 20px;
 }
@@ -50,4 +61,7 @@
   text-align: center;
   text-transform: uppercase;
   background-color: white;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(151, 99, 2);
 }

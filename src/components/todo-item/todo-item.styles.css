@@ -3,6 +3,7 @@
   justify-content: space-between;
   padding: 20px 30px;
   margin-bottom: 20px;
+  margin-left: 20px;
   background-color: rgb(254, 175, 28);
   z-index: 10;
 }
