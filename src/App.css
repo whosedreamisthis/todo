@@ -31,5 +31,10 @@
 }
 
 .todos {
-  margin: 20px;
+  /* margin: 20px; */
+}
+
+.todo-item {
+  height: 20px;
+  background-color: red;
 }

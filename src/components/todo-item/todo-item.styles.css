@@ -1,0 +1,14 @@
+.todo-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  background-color: rgb(254, 175, 28);
+}
+
+.todo-container p {
+  font-size: 20px;
+}
+.completed {
+  text-decoration: line-through;
+}
