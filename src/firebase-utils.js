@@ -30,11 +30,33 @@ export const signOutOfGoogle = () => signOut(auth);
 
 export const db = getFirestore(firebaseApp);
 
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {};
+
+export const addTodoToDatabase = async (user, todos) => {
+  await setDoc(doc(db, "todos", user.uid), {
+    name: "todos",
+    todos,
+  });
+};
+
+export const getTodoListFromDatabase = async (user) => {
+  const docRef = doc(db, "todos", user.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data().todos;
+  } else {
+    console.log("No such document.");
+    return null;
+  }
+};
+
 export const createUserDocFromAuth = async (userAuth) => {
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot.exists());
 
   //if user data exists
 

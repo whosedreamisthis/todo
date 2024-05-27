@@ -5,6 +5,8 @@ import TodoItem from "./components/todo-item/todo-item.component";
 import {
   signInWithGooglePopup,
   createUserDocFromAuth,
+  getTodoListFromDatabase,
+  addTodoToDatabase,
 } from "./firebase-utils.js";
 
 import { v4 as uuid } from "uuid";
@@ -12,10 +14,13 @@ import { signOut } from "firebase/auth";
 function App() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
+  const [user, setUser] = useState("");
   const [isSignedIn, setIsSignedIn] = useState(false);
   const addTodoItem = (evt) => {
+    const newTodos = [...todos, { text: input, id: uuid() }];
     setTodos([...todos, { text: input, id: uuid() }]);
     setInput("");
+    addTodoToDatabase(user, newTodos);
   };
 
   const toggleTodoComplete = (e) => {
@@ -45,8 +50,12 @@ function App() {
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
     const userDocRef = await createUserDocFromAuth(user);
-
+    setUser(user);
+    const todos = await getTodoListFromDatabase(user);
     setIsSignedIn(true);
+    console.log("todos", todos);
+    todos.map((t) => t);
+    setTodos(todos);
   };
 
   const logOut = async () => {
