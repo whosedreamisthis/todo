@@ -41,6 +41,18 @@ function App() {
         <h1>Todo List</h1>
         <span>A Todo App made with React and Firebase</span>
       </div>
+      <div>
+        <input
+          type="text"
+          className="input"
+          placeholder="Type in a todo item."
+          value={input}
+          onChange={(evt) => setInput(evt.target.value)}
+        ></input>
+        <button onClick={addTodoItem} className="add-button">
+          Add
+        </button>
+      </div>
       <div className="todos">
         {todos.map((t) => (
           <TodoItem
@@ -53,18 +65,6 @@ function App() {
             {t.todo}
           </TodoItem>
         ))}
-      </div>
-      <div>
-        <input
-          type="text"
-          className="input"
-          placeholder="Type in a todo item."
-          value={input}
-          onChange={(evt) => setInput(evt.target.value)}
-        ></input>
-        <button onClick={addTodoItem} className="add-button">
-          Add
-        </button>
       </div>
     </div>
   );
