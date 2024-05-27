@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="title-container">
+        <h1>Todo List</h1>
+        <span>A Todo App made with React and Firebase</span>
+      </div>
+      <div>
+        <input
+          type="text"
+          className="input"
+          placeholder="Type in a todo item."
+        ></input>
+        <button className="add-button">Add</button>
+      </div>
     </div>
   );
 }
