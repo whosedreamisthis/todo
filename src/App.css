@@ -5,6 +5,8 @@
   width: 50%;
   margin: auto;
   background-color: rgb(255, 200, 97);
+  margin-top: 30px;
+  position: relative;
 }
 .title-container {
   /* background-color: red; */
@@ -28,6 +30,7 @@
   /* background-color: green; */
   padding: 10px;
   margin: 20px;
+  font-size: 20px;
 }
 
 .todos {
@@ -36,5 +39,14 @@
 
 .todo-item {
   height: 20px;
-  background-color: red;
+}
+
+.sign-button {
+  height: 40px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  text-align: center;
+  text-transform: uppercase;
 }

@@ -2,10 +2,17 @@ import { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import TodoItem from "./components/todo-item/todo-item.component";
+import {
+  signInWithGooglePopup,
+  createUserDocFromAuth,
+} from "./firebase-utils.js";
+
 import { v4 as uuid } from "uuid";
+import { signOut } from "firebase/auth";
 function App() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const addTodoItem = (evt) => {
     setTodos([...todos, { text: input, id: uuid() }]);
     setInput("");
@@ -35,12 +42,34 @@ function App() {
     setTodos(newTodos);
   };
 
+  const logGoogleUser = async () => {
+    const { user } = await signInWithGooglePopup();
+    const userDocRef = await createUserDocFromAuth(user);
+
+    setIsSignedIn(true);
+  };
+
+  const logOut = async () => {
+    const response = await signOut;
+    setIsSignedIn(false);
+  };
+
   return (
     <div className="App">
       <div className="title-container">
         <h1>Todo List</h1>
         <span>A Todo App made with React and Firebase</span>
       </div>
+
+      {isSignedIn ? (
+        <button className="sign-button" onClick={logOut}>
+          Sign Out
+        </button>
+      ) : (
+        <button className="sign-button" onClick={logGoogleUser}>
+          Sign In
+        </button>
+      )}
       <div>
         <input
           type="text"
