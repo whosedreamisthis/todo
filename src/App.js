@@ -12,14 +12,27 @@ function App() {
   };
 
   const toggleTodoComplete = (e) => {
-    console.log("todo toggled ", e.target.className);
     if (e.target.className.includes("completed")) {
       e.target.className = e.target.className.replace("completed", "");
-      console.log("remove  ", e.target.className);
     } else {
       e.target.className += " completed";
-      console.log("add  ", e.target.className);
     }
+  };
+
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter((t) => t.id !== id);
+    setTodos(newTodos);
+  };
+  const editTodo = (id, newText) => {
+    const newTodos = [];
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].id === id) {
+        newTodos.push({ id, text: newText });
+      } else {
+        newTodos.push(todos[i]);
+      }
+    }
+    setTodos(newTodos);
   };
 
   return (
@@ -30,7 +43,13 @@ function App() {
       </div>
       <div className="todos">
         {todos.map((t) => (
-          <TodoItem key={t.id} todo={t} onTodoClick={toggleTodoComplete}>
+          <TodoItem
+            key={t.id}
+            todo={t}
+            onTodoClick={toggleTodoComplete}
+            onDeleteClick={deleteTodo}
+            onEditTodo={editTodo}
+          >
             {t.todo}
           </TodoItem>
         ))}
