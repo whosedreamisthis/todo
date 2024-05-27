@@ -93,7 +93,7 @@ function App() {
     <div className="App">
       <div className="title-container">
         <h1>Todo List</h1>
-        <span>A Todo App made with React and Firebase</span>
+        <span>A Todo App made with React</span>
       </div>
 
       {isSignedIn ? (
