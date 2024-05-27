@@ -65,3 +65,9 @@
 ::-webkit-scrollbar-thumb {
   background: rgb(151, 99, 2);
 }
+
+@media (min-width: 480px) {
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+}
