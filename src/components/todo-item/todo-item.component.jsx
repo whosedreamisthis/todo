@@ -23,7 +23,11 @@ const TodoItem = ({ todo, onTodoClick, onDeleteClick, onEditTodo }) => {
   };
   return (
     <div className="todo-container">
-      {!isEditing && <p onClick={onTodoClick}>{todo.text}</p>}
+      {!isEditing && (
+        <p className={todo.complete ? "complete" : ""} onClick={onTodoClick}>
+          {todo.text}
+        </p>
+      )}
       {isEditing && (
         <div className="input-container">
           <input

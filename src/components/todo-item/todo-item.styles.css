@@ -21,7 +21,8 @@
   gap: 20px;
   align-items: center;
 }
-.completed {
+
+.complete {
   text-decoration: line-through;
 }
 

@@ -28,10 +28,12 @@ function App() {
   };
 
   const toggleTodoComplete = (e, id) => {
-    if (e.target.className.includes("completed")) {
-      e.target.className = e.target.className.replace("completed", "");
+    console.log("toggle todo compplete start");
+
+    if (e.target.className.includes("complete")) {
+      e.target.className = e.target.className.replace("complete", "");
     } else {
-      e.target.className += " completed";
+      e.target.className += " complete";
     }
     const newTodos = [];
     for (let i = 0; i < todos.length; i++) {
@@ -46,6 +48,7 @@ function App() {
     }
     setTodos(newTodos);
     editTodoList(user, newTodos);
+    console.log("toggle todo compplete ", newTodos);
   };
 
   const deleteTodo = (id) => {
@@ -60,7 +63,7 @@ function App() {
     const newTodos = [];
     for (let i = 0; i < todos.length; i++) {
       if (todos[i].id === id) {
-        newTodos.unshift({ id, text: newText });
+        newTodos.unshift({ ...todos[i], text: newText });
         // newTodos.push({ id, text: newText });
       } else {
         // newTodos.push(todos[i]);
@@ -77,7 +80,6 @@ function App() {
     setUser(user);
     const todos = await getTodoListFromDatabase(user);
     setIsSignedIn(true);
-    todos.map((t) => t);
     setTodos(todos);
   };
 
