@@ -22,7 +22,7 @@ function App() {
       return;
     }
     const newTodos = [...todos, { text: input, id: uuid() }];
-    setTodos([{ text: input, id: uuid(), completed: false }, ...todos]);
+    setTodos([{ text: input, id: uuid(), complete: false }, ...todos]);
     setInput("");
     addTodoToDatabase(user, newTodos);
   };
